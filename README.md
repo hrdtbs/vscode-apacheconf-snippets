@@ -2,7 +2,7 @@
 
 This extension for Visual Studio Code adds snippets for Apache Conf (.htaccess file).
 
-![Use Extension](./img/use-extension.gif)
+![Use Extension](./img/use-extension-1.gif)
 
 ## Usage
 
