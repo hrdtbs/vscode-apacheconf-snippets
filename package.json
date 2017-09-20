@@ -1,0 +1,46 @@
+{
+    "name": "apacheconf-snippets",
+    "publisher": "eiminsasete",
+    "displayName": "Apache Conf Snippets",
+    "description": "Apache Conf Snippets",
+    "icon": "img/apache.png",
+    "galleryBanner": {
+        "color": "#0273D4",
+        "theme": "dark"
+    },
+    "license": "SEE LICENSE IN LICENSE.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eiminsasete/vscode-apacheconf-snippets.git"
+    },
+    "keywords": [
+        "Apache",
+        "Apacheconf",
+        "htaccess"
+    ],
+    "version": "1.1.1",
+    "engines": {
+        "vscode": "^1.16.0"
+    },
+    "devDependencies": {
+        "vscode": "^1.16.0"
+    },
+    "categories": [
+        "Snippets",
+        "Other"
+    ],
+    "contributes": {
+        "jsonValidation": [
+            {
+                "fileMatch": "manifest.json",
+                "url": "http://json.schemastore.org/web-manifest"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "apacheconf",
+                "path": "./snippets/apacheconf.json"
+            }
+        ]
+    }
+}
