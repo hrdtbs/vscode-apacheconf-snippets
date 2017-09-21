@@ -18,12 +18,12 @@
         "Apacheconf",
         "htaccess"
     ],
-    "version": "1.1.4",
+    "version": "1.1.6",
     "engines": {
-        "vscode": "^1.16.0"
+        "vscode": "^1.10.0"
     },
     "devDependencies": {
-        "vscode": "^1.16.0"
+        "vscode": "^1.11.0"
     },
     "categories": [
         "Snippets",

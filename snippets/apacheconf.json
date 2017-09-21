@@ -1,477 +1,477 @@
 {
-  "Force www": {
-    "prefix": "a-force-www",
-    "description": "Force www",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{HTTP_HOST} ^example\\.com [NC]",
-      "RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]"
-    ]
-  },
-  "Force www in a Generic Way": {
-    "prefix": "a-force-www-in-a-generic-way",
-    "description": "Force www in a Generic Way",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{HTTP_HOST} !^$",
-      "RewriteCond %{HTTP_HOST} !^www\\. [NC]",
-      "RewriteCond %{HTTPS}s ^on(s)|",
-      "RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]"
-    ]
-  },
-  "Force non-www": {
-    "prefix": "a-force-non-www",
-    "description": "Force non-www",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{HTTP_HOST} ^www\\.example\\.com [NC]",
-      "RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]"
-    ]
-  },
-  "Force non-www in a Generic Way": {
-    "prefix": "a-force-non-www-in-a-generic-way",
-    "description": "Force non-www in a Generic Way",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{HTTP_HOST} ^www\\.",
-      "RewriteCond %{HTTPS}s ^on(s)|off",
-      "RewriteCond http%1://%{HTTP_HOST} ^(https?://)(www\\.)?(.+)$",
-      "RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]"
-    ]
-  },
-  "Force HTTPS": {
-    "prefix": "a-force-https",
-    "description": "Force HTTPS",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{HTTPS} !on",
-      "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}",
-      "<IfModule mod_headers.c>",
-      "    Header always set Strict-Transport-Security \"max-age=31536000; includeSubDomains\"",
-      "</IfModule>"
-    ]
-  },
-  "Force HTTPS Behind a Proxy": {
-    "prefix": "a-force-https-behind-a-proxy",
-    "description": "Force HTTPS Behind a Proxy",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{HTTP:X-Forwarded-Proto} !https",
-      "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}"
-    ]
-  },
-  "Force Trailing Slash": {
-    "prefix": "a-force-trailing-slash",
-    "description": "Force Trailing Slash",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{REQUEST_URI} /+[^\\.]+$",
-      "RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]"
-    ]
-  },
-  "Remove Trailing Slash": {
-    "prefix": "a-remove-trailing-slash",
-    "description": "Remove Trailing Slash",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{REQUEST_FILENAME} !-d",
-      "RewriteCond %{REQUEST_URI} (.+)/$",
-      "RewriteRule ^ %1 [R=301,L]"
-    ]
-  },
-  "Redirect a Single Page": {
-    "prefix": "a-redirect-a-single-page",
-    "description": "Redirect a Single Page",
-    "body": [
-      "Redirect 301 /oldpage.html http://example.com/newpage.html"
-    ]
-  },
-  "Redirect Using RedirectMatch": {
-    "prefix": "a-redirect-using-redirectmatch",
-    "description": "Redirect Using RedirectMatch.",
-    "body": [
-      "RedirectMatch 301 /subdirectory(.*) http://www.newsite.com/newfolder/$1",
-      "RedirectMatch 301 ^/(.*).htm$ /$1.html",
-      "RedirectMatch 301 ^/200([0-9])/([^01])(.*)$ /$2$3",
-      "RedirectMatch 301 ^/category/(.*)$ /$1",
-      "RedirectMatch 301 ^/(.*)/htaccesselite-ultimate-htaccess-article.html(.*) /htaccess/htaccess.html",
-      "RedirectMatch 301 ^/(.*).html/1/(.*) /$1.html$2",
-      "RedirectMatch 301 ^/manual/(.*)$ http://www.php.net/manual/$1",
-      "RedirectMatch 301 ^/dreamweaver/(.*)$ /tools/$1",
-      "RedirectMatch 301 ^/z/(.*)$ http://static.askapache.com/$1"
-    ]
-  },
-  "Alias a Single Directory": {
-    "prefix": "a-alias-a-single-directory",
-    "description": "Alias a Single Directory",
-    "body": [
-      "RewriteEngine On",
-      "RewriteRule ^source-directory/(.*) /target-directory/$1 [R=301,L]"
-    ]
-  },
-  "Alias Paths To Script": {
-    "prefix": "a-alias-paths-to-script",
-    "description": "Alias Paths To Script",
-    "body": [
-      "FallbackResource /index.fcgi"
-    ]
-  },
-  "Redirect an Entire Site": {
-    "prefix": "a-redirect-an-entire-site",
-    "description": "Redirect an Entire Site",
-    "body": [
-      "Redirect 301 / http://newsite.com/"
-    ]
-  },
-  "Alias “Clean” URLs": {
-    "prefix": "a-alias-clean-urls",
-    "description": "Alias “Clean” URLs",
-    "body": [
-      "RewriteEngine On",
-      "RewriteCond %{SCRIPT_FILENAME} !-d",
-      "RewriteRule ^([^.]+)$ $1.php [NC,L]"
-    ]
-  },
-  "Deny All Access": {
-    "prefix": "a-deny-all-access",
-    "description": "Deny All Access",
-    "body": [
-      "## Apache 2.2",
-      "Deny from all",
-      "",
-      "## Apache 2.4",
-      "# Require all denied"
-    ]
-  },
-  "Deny All Access Except Yours": {
-    "prefix": "a-deny-all-access-except-yours",
-    "description": "Deny All Access Except Yours",
-    "body": [
-      "## Apache 2.2",
-      "Order deny,allow",
-      "Deny from all",
-      "Allow from xxx.xxx.xxx.xxx",
-      "",
-      "## Apache 2.4",
-      "# Require all denied",
-      "# Require ip xxx.xxx.xxx.xxx"
-    ]
-  },
-  "Allow All Access Except Spammers'": {
-    "prefix": "a-allow-all-access-except-spammers'",
-    "description": "Allow All Access Except Spammers'",
-    "body": [
-      "## Apache 2.2",
-      "Order deny,allow",
-      "Deny from xxx.xxx.xxx.xxx",
-      "Deny from xxx.xxx.xxx.xxy",
-      "",
-      "## Apache 2.4",
-      "# Require all granted",
-      "# Require not ip xxx.xxx.xxx.xxx",
-      "# Require not ip xxx.xxx.xxx.xxy"
-    ]
-  },
-  "Deny Access to Hidden Files and Directories": {
-    "prefix": "a-deny-access-to-hidden-files-and-directories",
-    "description": "Deny Access to Hidden Files and Directories",
-    "body": [
-      "RewriteCond %{SCRIPT_FILENAME} -d [OR]",
-      "RewriteCond %{SCRIPT_FILENAME} -f",
-      "RewriteRule \"(^|/)\\.\" - [F]"
-    ]
-  },
-  "Deny Access to Backup and Source Files": {
-    "prefix": "a-deny-access-to-backup-and-source-files",
-    "description": "Deny Access to Backup and Source Files",
-    "body": [
-      "<FilesMatch \"(\\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$\">",
-      "    ## Apache 2.2",
-      "    Order allow,deny",
-      "    Deny from all",
-      "    Satisfy All",
-      "",
-      "    ## Apache 2.4",
-      "    # Require all denied",
-      "</FilesMatch>"
-    ]
-  },
-  "Disable Directory Browsing": {
-    "prefix": "a-disable-directory-browsing",
-    "description": "Disable Directory Browsing",
-    "body": [
-      "Options All -Indexes"
-    ]
-  },
-  "Disable Image Hotlinking": {
-    "prefix": "a-disable-image-hotlinking",
-    "description": "Disable Image Hotlinking",
-    "body": [
-      "RewriteEngine on",
-      "# Remove the following line if you want to block blank referrer too",
-      "RewriteCond %{HTTP_REFERER} !^$",
-      "",
-      "RewriteCond %{HTTP_REFERER} !^https?://(.+\\.)?example.com [NC]",
-      "RewriteRule \\.(jpe?g|png|gif|bmp)$ - [NC,F,L]",
-      "",
-      "# If you want to display a “blocked” banner in place of the hotlinked image,",
-      "# replace the above rule with:",
-      "# RewriteRule \\.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]"
-    ]
-  },
-  "Disable Image Hotlinking for Specific Domains": {
-    "prefix": "a-disable-image-hotlinking-for-specific-domains",
-    "description": "Disable Image Hotlinking for Specific Domains",
-    "body": [
-      "RewriteEngine on",
-      "RewriteCond %{HTTP_REFERER} ^https?://(.+\\.)?badsite\\.com [NC,OR]",
-      "RewriteCond %{HTTP_REFERER} ^https?://(.+\\.)?badsite2\\.com [NC,OR]",
-      "RewriteRule \\.(jpe?g|png|gif|bmp)$ - [NC,F,L]",
-      "",
-      "# If you want to display a “blocked” banner in place of the hotlinked image,",
-      "# replace the above rule with:",
-      "# RewriteRule \\.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]"
-    ]
-  },
-  "Password Protect a Directory": {
-    "prefix": "a-password-protect-a-directory",
-    "description": "Password Protect a Directory",
-    "body": [
-      "htpasswd -c /home/fellowship/.htpasswd boromir"
-    ]
-  },
-  "Password Protect a File or Several Files": {
-    "prefix": "a-password-protect-a-file-or-several-files",
-    "description": "Password Protect a File or Several Files",
-    "body": [
-      "AuthName \"One still does not simply\"",
-      "AuthType Basic",
-      "AuthUserFile /home/fellowship/.htpasswd",
-      "",
-      "<Files \"one-ring.o\">",
-      "Require valid-user",
-      "</Files>",
-      "",
-      "<FilesMatch ^((one|two|three)-rings?\\.o)$>",
-      "Require valid-user",
-      "</FilesMatch>"
-    ]
-  },
-  "Block Visitors by Referrer": {
-    "prefix": "a-block-visitors-by-referrer",
-    "description": "Block Visitors by Referrer",
-    "body": [
-      "RewriteEngine on",
-      "# Options +FollowSymlinks",
-      "RewriteCond %{HTTP_REFERER} somedomain\\.com [NC,OR]",
-      "RewriteCond %{HTTP_REFERER} anotherdomain\\.com",
-      "RewriteRule .* - [F]"
-    ]
-  },
-  "Prevent Framing the Site": {
-    "prefix": "a-prevent-framing-the-site",
-    "description": "Prevent Framing the Site",
-    "body": [
-      "SetEnvIf Request_URI \"/starry-night\" allow_framing=true",
-      "Header set X-Frame-Options SAMEORIGIN env=!allow_framing"
-    ]
-  },
-  "Compress Text Files": {
-    "prefix": "a-compress-text-files",
-    "description": "Compress Text Files",
-    "body": [
-      "<IfModule mod_deflate.c>",
-      "",
-      "    # Force compression for mangled headers.",
-      "    # https://developer.yahoo.com/blogs/ydn/pushing-beyond-gzipping-25601.html",
-      "    <IfModule mod_setenvif.c>",
-      "        <IfModule mod_headers.c>",
-      "            SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\\s*,?\\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding",
-      "            RequestHeader append Accept-Encoding \"gzip,deflate\" env=HAVE_Accept-Encoding",
-      "        </IfModule>",
-      "    </IfModule>",
-      "",
-      "    # Compress all output labeled with one of the following MIME-types",
-      "    # (for Apache versions below 2.3.7, you don't need to enable `mod_filter`",
-      "    #  and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines",
-      "    #  as `AddOutputFilterByType` is still in the core directives).",
-      "    <IfModule mod_filter.c>",
-      "        AddOutputFilterByType DEFLATE application/atom+xml \\",
-      "                                      application/javascript \\",
-      "                                      application/json \\",
-      "                                      application/rss+xml \\",
-      "                                      application/vnd.ms-fontobject \\",
-      "                                      application/x-font-ttf \\",
-      "                                      application/x-web-app-manifest+json \\",
-      "                                      application/xhtml+xml \\",
-      "                                      application/xml \\",
-      "                                      font/opentype \\",
-      "                                      image/svg+xml \\",
-      "                                      image/x-icon \\",
-      "                                      text/css \\",
-      "                                      text/html \\",
-      "                                      text/plain \\",
-      "                                      text/x-component \\",
-      "                                      text/xml",
-      "    </IfModule>",
-      "",
-      "</IfModule>"
-    ]
-  },
-  "Set Expires Headers": {
-    "prefix": "a-set-expires-headers",
-    "description": "Set Expires Headers",
-    "body": [
-      "<IfModule mod_expires.c>",
-      "    ExpiresActive on",
-      "    ExpiresDefault                                      \"access plus 1 month\"",
-      "",
-      "  # CSS",
-      "    ExpiresByType text/css                              \"access plus 1 year\"",
-      "",
-      "  # Data interchange",
-      "    ExpiresByType application/json                      \"access plus 0 seconds\"",
-      "    ExpiresByType application/xml                       \"access plus 0 seconds\"",
-      "    ExpiresByType text/xml                              \"access plus 0 seconds\"",
-      "",
-      "  # Favicon (cannot be renamed!)",
-      "    ExpiresByType image/x-icon                          \"access plus 1 week\"",
-      "",
-      "  # HTML components (HTCs)",
-      "    ExpiresByType text/x-component                      \"access plus 1 month\"",
-      "",
-      "  # HTML",
-      "    ExpiresByType text/html                             \"access plus 0 seconds\"",
-      "",
-      "  # JavaScript",
-      "    ExpiresByType application/javascript                \"access plus 1 year\"",
-      "",
-      "  # Manifest files",
-      "    ExpiresByType application/x-web-app-manifest+json   \"access plus 0 seconds\"",
-      "    ExpiresByType text/cache-manifest                   \"access plus 0 seconds\"",
-      "",
-      "  # Media",
-      "    ExpiresByType audio/ogg                             \"access plus 1 month\"",
-      "    ExpiresByType image/gif                             \"access plus 1 month\"",
-      "    ExpiresByType image/jpeg                            \"access plus 1 month\"",
-      "    ExpiresByType image/png                             \"access plus 1 month\"",
-      "    ExpiresByType video/mp4                             \"access plus 1 month\"",
-      "    ExpiresByType video/ogg                             \"access plus 1 month\"",
-      "    ExpiresByType video/webm                            \"access plus 1 month\"",
-      "",
-      "  # Web feeds",
-      "    ExpiresByType application/atom+xml                  \"access plus 1 hour\"",
-      "    ExpiresByType application/rss+xml                   \"access plus 1 hour\"",
-      "",
-      "  # Web fonts",
-      "    ExpiresByType application/font-woff2                \"access plus 1 month\"",
-      "    ExpiresByType application/font-woff                 \"access plus 1 month\"",
-      "    ExpiresByType application/vnd.ms-fontobject         \"access plus 1 month\"",
-      "    ExpiresByType application/x-font-ttf                \"access plus 1 month\"",
-      "    ExpiresByType font/opentype                         \"access plus 1 month\"",
-      "    ExpiresByType image/svg+xml                         \"access plus 1 month\"",
-      "</IfModule>"
-    ]
-  },
-  "Turn eTags Off": {
-    "prefix": "a-turn-etags-off",
-    "description": "Turn eTags Off",
-    "body": [
-      "<IfModule mod_headers.c>",
-      "    Header unset ETag",
-      "</IfModule>",
-      "FileETag None"
-    ]
-  },
-  "Set PHP Variables": {
-    "prefix": "a-set-php-variables",
-    "description": "Set PHP Variables",
-    "body": [
-      "php_value <key> <val>",
-      "",
-      "# For example:",
-      "php_value upload_max_filesize 50M",
-      "php_value max_execution_time 240"
-    ]
-  },
-  "Custom Error Pages": {
-    "prefix": "a-custom-error-pages",
-    "description": "Custom Error Pages",
-    "body": [
-      "ErrorDocument 500 \"Houston, we have a problem.\"",
-      "ErrorDocument 401 http://error.example.com/mordor.html",
-      "ErrorDocument 404 /errors/halflife3.html"
-    ]
-  },
-  "Force Downloading": {
-    "prefix": "a-force-downloading",
-    "description": "Force Downloading",
-    "body": [
-      "<Files *.md>",
-      "   ForceType application/octet-stream",
-      "   Header set Content-Disposition attachment",
-      "</Files>"
-    ]
-  },
-  "Prevent Downloading": {
-    "prefix": "a-prevent-downloading",
-    "description": "Prevent Downloading",
-    "body": [
-      "<FilesMatch \"\\.(tex|log|aux)$\">",
-      "   Header set Content-Type text/plain",
-      "</FilesMatch>"
-    ]
-  },
-  "Allow Cross-Domain Fonts": {
-    "prefix": "a-allow-cross-domain-fonts",
-    "description": "Allow Cross-Domain Fonts",
-    "body": [
-      "<IfModule mod_headers.c>",
-      "   <FilesMatch \"\\.(eot|otf|ttc|ttf|woff|woff2)$\">",
-      "       Header set Access-Control-Allow-Origin \"*\"",
-      "   </FilesMatch>",
-      "</IfModule>"
-    ]
-  },
-  "Auto UTF-8 Encode": {
-    "prefix": "a-auto-utf-8-encode",
-    "description": "Auto UTF-8 Encode",
-    "body": [
-      "# Use UTF-8 encoding for anything served text/plain or text/html",
-      "AddDefaultCharset utf-8",
-      "",
-      "# Force UTF-8 for a number of file formats",
-      "AddCharset utf-8 .atom .css .js .json .rss .vtt .xml"
-    ]
-  },
-  "Switch to Another PHP Version": {
-    "prefix": "a-switch-to-another-php-version",
-    "description": "Switch to Another PHP Version",
-    "body": [
-      "AddHandler application/x-httpd-php56 .php",
-      "",
-      "# Alternatively, you can use AddType",
-      "AddType application/x-httpd-php56 .php"
-    ]
-  },
-  "Disable Internet Explorer Compatibility View": {
-    "prefix": "a-disable-internet-explorer-compatibility-view",
-    "description": "Disable Internet Explorer Compatibility View",
-    "body": [
-      "<IfModule mod_headers.c>",
-      "   BrowserMatch MSIE is-msie",
-      "   Header set X-UA-Compatible IE=edge env=is-msie",
-      "</IfModule>"
-    ]
-  },
-  "Serve WebP Images": {
-    "prefix": "a-serve-webp-images",
-    "description": "Serve WebP Images",
-    "body": [
-      "RewriteEngine On",
-      "RewriteCond %{HTTP_ACCEPT} image/webp",
-      "RewriteCond %{DOCUMENT_ROOT}/$1.webp -f",
-      "RewriteRule (.+)\\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]"
-    ]
-  }
+    "Force www": {
+        "prefix": "a-force-www",
+        "description": "Force www",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{HTTP_HOST} ^example\\.com [NC]",
+            "RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]"
+        ]
+    },
+    "Force www in a Generic Way": {
+        "prefix": "a-force-www-in-a-generic-way",
+        "description": "Force www in a Generic Way",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{HTTP_HOST} !^$",
+            "RewriteCond %{HTTP_HOST} !^www\\. [NC]",
+            "RewriteCond %{HTTPS}s ^on(s)|",
+            "RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]"
+        ]
+    },
+    "Force non-www": {
+        "prefix": "a-force-non-www",
+        "description": "Force non-www",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{HTTP_HOST} ^www\\.example\\.com [NC]",
+            "RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]"
+        ]
+    },
+    "Force non-www in a Generic Way": {
+        "prefix": "a-force-non-www-in-a-generic-way",
+        "description": "Force non-www in a Generic Way",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{HTTP_HOST} ^www\\.",
+            "RewriteCond %{HTTPS}s ^on(s)|off",
+            "RewriteCond http%1://%{HTTP_HOST} ^(https?://)(www\\.)?(.+)$",
+            "RewriteRule ^ %1%3%{REQUEST_URI} [R=301,L]"
+        ]
+    },
+    "Force HTTPS": {
+        "prefix": "a-force-https",
+        "description": "Force HTTPS",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{HTTPS} !on",
+            "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]",
+            "<IfModule mod_headers.c>",
+            "    Header always set Strict-Transport-Security \"max-age=31536000; includeSubDomains\"",
+            "</IfModule>"
+        ]
+    },
+    "Force HTTPS Behind a Proxy": {
+        "prefix": "a-force-https-behind-a-proxy",
+        "description": "Force HTTPS Behind a Proxy",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{HTTP:X-Forwarded-Proto} !https",
+            "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]"
+        ]
+    },
+    "Force Trailing Slash": {
+        "prefix": "a-force-trailing-slash",
+        "description": "Force Trailing Slash",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{REQUEST_URI} /+[^\\.]+$",
+            "RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]"
+        ]
+    },
+    "Remove Trailing Slash": {
+        "prefix": "a-remove-trailing-slash",
+        "description": "Remove Trailing Slash",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{REQUEST_FILENAME} !-d",
+            "RewriteCond %{REQUEST_URI} (.+)/$",
+            "RewriteRule ^ %1 [R=301,L]"
+        ]
+    },
+    "Redirect a Single Page": {
+        "prefix": "a-redirect-a-single-page",
+        "description": "Redirect a Single Page",
+        "body": [
+            "Redirect 301 /oldpage.html http://example.com/newpage.html"
+        ]
+    },
+    "Redirect Using RedirectMatch": {
+        "prefix": "a-redirect-using-redirectmatch",
+        "description": "Redirect Using RedirectMatch.",
+        "body": [
+            "RedirectMatch 301 /subdirectory(.*) http://www.newsite.com/newfolder/$1",
+            "RedirectMatch 301 ^/(.*).htm$ /$1.html",
+            "RedirectMatch 301 ^/200([0-9])/([^01])(.*)$ /$2$3",
+            "RedirectMatch 301 ^/category/(.*)$ /$1",
+            "RedirectMatch 301 ^/(.*)/htaccesselite-ultimate-htaccess-article.html(.*) /htaccess/htaccess.html",
+            "RedirectMatch 301 ^/(.*).html/1/(.*) /$1.html$2",
+            "RedirectMatch 301 ^/manual/(.*)$ http://www.php.net/manual/$1",
+            "RedirectMatch 301 ^/dreamweaver/(.*)$ /tools/$1",
+            "RedirectMatch 301 ^/z/(.*)$ http://static.askapache.com/$1"
+        ]
+    },
+    "Alias a Single Directory": {
+        "prefix": "a-alias-a-single-directory",
+        "description": "Alias a Single Directory",
+        "body": [
+            "RewriteEngine On",
+            "RewriteRule ^source-directory/(.*) /target-directory/$1 [R=301,L]"
+        ]
+    },
+    "Alias Paths To Script": {
+        "prefix": "a-alias-paths-to-script",
+        "description": "Alias Paths To Script",
+        "body": [
+            "FallbackResource /index.fcgi"
+        ]
+    },
+    "Redirect an Entire Site": {
+        "prefix": "a-redirect-an-entire-site",
+        "description": "Redirect an Entire Site",
+        "body": [
+            "Redirect 301 / http://newsite.com/"
+        ]
+    },
+    "Alias “Clean” URLs": {
+        "prefix": "a-alias-clean-urls",
+        "description": "Alias “Clean” URLs",
+        "body": [
+            "RewriteEngine On",
+            "RewriteCond %{SCRIPT_FILENAME} !-d",
+            "RewriteRule ^([^.]+)$ $1.php [NC,L]"
+        ]
+    },
+    "Deny All Access": {
+        "prefix": "a-deny-all-access",
+        "description": "Deny All Access",
+        "body": [
+            "## Apache 2.2",
+            "Deny from all",
+            "",
+            "## Apache 2.4",
+            "# Require all denied"
+        ]
+    },
+    "Deny All Access Except Yours": {
+        "prefix": "a-deny-all-access-except-yours",
+        "description": "Deny All Access Except Yours",
+        "body": [
+            "## Apache 2.2",
+            "Order deny,allow",
+            "Deny from all",
+            "Allow from xxx.xxx.xxx.xxx",
+            "",
+            "## Apache 2.4",
+            "# Require all denied",
+            "# Require ip xxx.xxx.xxx.xxx"
+        ]
+    },
+    "Allow All Access Except Spammers'": {
+        "prefix": "a-allow-all-access-except-spammers'",
+        "description": "Allow All Access Except Spammers'",
+        "body": [
+            "## Apache 2.2",
+            "Order deny,allow",
+            "Deny from xxx.xxx.xxx.xxx",
+            "Deny from xxx.xxx.xxx.xxy",
+            "",
+            "## Apache 2.4",
+            "# Require all granted",
+            "# Require not ip xxx.xxx.xxx.xxx",
+            "# Require not ip xxx.xxx.xxx.xxy"
+        ]
+    },
+    "Deny Access to Hidden Files and Directories": {
+        "prefix": "a-deny-access-to-hidden-files-and-directories",
+        "description": "Deny Access to Hidden Files and Directories",
+        "body": [
+            "RewriteCond %{SCRIPT_FILENAME} -d [OR]",
+            "RewriteCond %{SCRIPT_FILENAME} -f",
+            "RewriteRule \"(^|/)\\.\" - [F]"
+        ]
+    },
+    "Deny Access to Backup and Source Files": {
+        "prefix": "a-deny-access-to-backup-and-source-files",
+        "description": "Deny Access to Backup and Source Files",
+        "body": [
+            "<FilesMatch \"(\\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$\">",
+            "    ## Apache 2.2",
+            "    Order allow,deny",
+            "    Deny from all",
+            "    Satisfy All",
+            "",
+            "    ## Apache 2.4",
+            "    # Require all denied",
+            "</FilesMatch>"
+        ]
+    },
+    "Disable Directory Browsing": {
+        "prefix": "a-disable-directory-browsing",
+        "description": "Disable Directory Browsing",
+        "body": [
+            "Options All -Indexes"
+        ]
+    },
+    "Disable Image Hotlinking": {
+        "prefix": "a-disable-image-hotlinking",
+        "description": "Disable Image Hotlinking",
+        "body": [
+            "RewriteEngine on",
+            "# Remove the following line if you want to block blank referrer too",
+            "RewriteCond %{HTTP_REFERER} !^$",
+            "",
+            "RewriteCond %{HTTP_REFERER} !^https?://(.+\\.)?example.com [NC]",
+            "RewriteRule \\.(jpe?g|png|gif|bmp)$ - [NC,F,L]",
+            "",
+            "# If you want to display a “blocked” banner in place of the hotlinked image,",
+            "# replace the above rule with:",
+            "# RewriteRule \\.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]"
+        ]
+    },
+    "Disable Image Hotlinking for Specific Domains": {
+        "prefix": "a-disable-image-hotlinking-for-specific-domains",
+        "description": "Disable Image Hotlinking for Specific Domains",
+        "body": [
+            "RewriteEngine on",
+            "RewriteCond %{HTTP_REFERER} ^https?://(.+\\.)?badsite\\.com [NC,OR]",
+            "RewriteCond %{HTTP_REFERER} ^https?://(.+\\.)?badsite2\\.com [NC,OR]",
+            "RewriteRule \\.(jpe?g|png|gif|bmp)$ - [NC,F,L]",
+            "",
+            "# If you want to display a “blocked” banner in place of the hotlinked image,",
+            "# replace the above rule with:",
+            "# RewriteRule \\.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]"
+        ]
+    },
+    "Password Protect a Directory": {
+        "prefix": "a-password-protect-a-directory",
+        "description": "Password Protect a Directory",
+        "body": [
+            "htpasswd -c /home/fellowship/.htpasswd boromir"
+        ]
+    },
+    "Password Protect a File or Several Files": {
+        "prefix": "a-password-protect-a-file-or-several-files",
+        "description": "Password Protect a File or Several Files",
+        "body": [
+            "AuthName \"One still does not simply\"",
+            "AuthType Basic",
+            "AuthUserFile /home/fellowship/.htpasswd",
+            "",
+            "<Files \"one-ring.o\">",
+            "Require valid-user",
+            "</Files>",
+            "",
+            "<FilesMatch ^((one|two|three)-rings?\\.o)$>",
+            "Require valid-user",
+            "</FilesMatch>"
+        ]
+    },
+    "Block Visitors by Referrer": {
+        "prefix": "a-block-visitors-by-referrer",
+        "description": "Block Visitors by Referrer",
+        "body": [
+            "RewriteEngine on",
+            "# Options +FollowSymlinks",
+            "RewriteCond %{HTTP_REFERER} somedomain\\.com [NC,OR]",
+            "RewriteCond %{HTTP_REFERER} anotherdomain\\.com",
+            "RewriteRule .* - [F]"
+        ]
+    },
+    "Prevent Framing the Site": {
+        "prefix": "a-prevent-framing-the-site",
+        "description": "Prevent Framing the Site",
+        "body": [
+            "SetEnvIf Request_URI \"/starry-night\" allow_framing=true",
+            "Header set X-Frame-Options SAMEORIGIN env=!allow_framing"
+        ]
+    },
+    "Compress Text Files": {
+        "prefix": "a-compress-text-files",
+        "description": "Compress Text Files",
+        "body": [
+            "<IfModule mod_deflate.c>",
+            "",
+            "    # Force compression for mangled headers.",
+            "    # https://developer.yahoo.com/blogs/ydn/pushing-beyond-gzipping-25601.html",
+            "    <IfModule mod_setenvif.c>",
+            "        <IfModule mod_headers.c>",
+            "            SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\\s*,?\\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding",
+            "            RequestHeader append Accept-Encoding \"gzip,deflate\" env=HAVE_Accept-Encoding",
+            "        </IfModule>",
+            "    </IfModule>",
+            "",
+            "    # Compress all output labeled with one of the following MIME-types",
+            "    # (for Apache versions below 2.3.7, you don't need to enable `mod_filter`",
+            "    #  and can remove the `<IfModule mod_filter.c>` and `</IfModule>` lines",
+            "    #  as `AddOutputFilterByType` is still in the core directives).",
+            "    <IfModule mod_filter.c>",
+            "        AddOutputFilterByType DEFLATE application/atom+xml \\",
+            "                                      application/javascript \\",
+            "                                      application/json \\",
+            "                                      application/rss+xml \\",
+            "                                      application/vnd.ms-fontobject \\",
+            "                                      application/x-font-ttf \\",
+            "                                      application/x-web-app-manifest+json \\",
+            "                                      application/xhtml+xml \\",
+            "                                      application/xml \\",
+            "                                      font/opentype \\",
+            "                                      image/svg+xml \\",
+            "                                      image/x-icon \\",
+            "                                      text/css \\",
+            "                                      text/html \\",
+            "                                      text/plain \\",
+            "                                      text/x-component \\",
+            "                                      text/xml",
+            "    </IfModule>",
+            "",
+            "</IfModule>"
+        ]
+    },
+    "Set Expires Headers": {
+        "prefix": "a-set-expires-headers",
+        "description": "Set Expires Headers",
+        "body": [
+            "<IfModule mod_expires.c>",
+            "    ExpiresActive on",
+            "    ExpiresDefault                                      \"access plus 1 month\"",
+            "",
+            "  # CSS",
+            "    ExpiresByType text/css                              \"access plus 1 year\"",
+            "",
+            "  # Data interchange",
+            "    ExpiresByType application/json                      \"access plus 0 seconds\"",
+            "    ExpiresByType application/xml                       \"access plus 0 seconds\"",
+            "    ExpiresByType text/xml                              \"access plus 0 seconds\"",
+            "",
+            "  # Favicon (cannot be renamed!)",
+            "    ExpiresByType image/x-icon                          \"access plus 1 week\"",
+            "",
+            "  # HTML components (HTCs)",
+            "    ExpiresByType text/x-component                      \"access plus 1 month\"",
+            "",
+            "  # HTML",
+            "    ExpiresByType text/html                             \"access plus 0 seconds\"",
+            "",
+            "  # JavaScript",
+            "    ExpiresByType application/javascript                \"access plus 1 year\"",
+            "",
+            "  # Manifest files",
+            "    ExpiresByType application/x-web-app-manifest+json   \"access plus 0 seconds\"",
+            "    ExpiresByType text/cache-manifest                   \"access plus 0 seconds\"",
+            "",
+            "  # Media",
+            "    ExpiresByType audio/ogg                             \"access plus 1 month\"",
+            "    ExpiresByType image/gif                             \"access plus 1 month\"",
+            "    ExpiresByType image/jpeg                            \"access plus 1 month\"",
+            "    ExpiresByType image/png                             \"access plus 1 month\"",
+            "    ExpiresByType video/mp4                             \"access plus 1 month\"",
+            "    ExpiresByType video/ogg                             \"access plus 1 month\"",
+            "    ExpiresByType video/webm                            \"access plus 1 month\"",
+            "",
+            "  # Web feeds",
+            "    ExpiresByType application/atom+xml                  \"access plus 1 hour\"",
+            "    ExpiresByType application/rss+xml                   \"access plus 1 hour\"",
+            "",
+            "  # Web fonts",
+            "    ExpiresByType application/font-woff2                \"access plus 1 month\"",
+            "    ExpiresByType application/font-woff                 \"access plus 1 month\"",
+            "    ExpiresByType application/vnd.ms-fontobject         \"access plus 1 month\"",
+            "    ExpiresByType application/x-font-ttf                \"access plus 1 month\"",
+            "    ExpiresByType font/opentype                         \"access plus 1 month\"",
+            "    ExpiresByType image/svg+xml                         \"access plus 1 month\"",
+            "</IfModule>"
+        ]
+    },
+    "Turn eTags Off": {
+        "prefix": "a-turn-etags-off",
+        "description": "Turn eTags Off",
+        "body": [
+            "<IfModule mod_headers.c>",
+            "    Header unset ETag",
+            "</IfModule>",
+            "FileETag None"
+        ]
+    },
+    "Set PHP Variables": {
+        "prefix": "a-set-php-variables",
+        "description": "Set PHP Variables",
+        "body": [
+            "php_value <key> <val>",
+            "",
+            "# For example:",
+            "php_value upload_max_filesize 50M",
+            "php_value max_execution_time 240"
+        ]
+    },
+    "Custom Error Pages": {
+        "prefix": "a-custom-error-pages",
+        "description": "Custom Error Pages",
+        "body": [
+            "ErrorDocument 500 \"Houston, we have a problem.\"",
+            "ErrorDocument 401 http://error.example.com/mordor.html",
+            "ErrorDocument 404 /errors/halflife3.html"
+        ]
+    },
+    "Force Downloading": {
+        "prefix": "a-force-downloading",
+        "description": "Force Downloading",
+        "body": [
+            "<Files *.md>",
+            "   ForceType application/octet-stream",
+            "   Header set Content-Disposition attachment",
+            "</Files>"
+        ]
+    },
+    "Prevent Downloading": {
+        "prefix": "a-prevent-downloading",
+        "description": "Prevent Downloading",
+        "body": [
+            "<FilesMatch \"\\.(tex|log|aux)$\">",
+            "   Header set Content-Type text/plain",
+            "</FilesMatch>"
+        ]
+    },
+    "Allow Cross-Domain Fonts": {
+        "prefix": "a-allow-cross-domain-fonts",
+        "description": "Allow Cross-Domain Fonts",
+        "body": [
+            "<IfModule mod_headers.c>",
+            "   <FilesMatch \"\\.(eot|otf|ttc|ttf|woff|woff2)$\">",
+            "       Header set Access-Control-Allow-Origin \"*\"",
+            "   </FilesMatch>",
+            "</IfModule>"
+        ]
+    },
+    "Auto UTF-8 Encode": {
+        "prefix": "a-auto-utf-8-encode",
+        "description": "Auto UTF-8 Encode",
+        "body": [
+            "# Use UTF-8 encoding for anything served text/plain or text/html",
+            "AddDefaultCharset utf-8",
+            "",
+            "# Force UTF-8 for a number of file formats",
+            "AddCharset utf-8 .atom .css .js .json .rss .vtt .xml"
+        ]
+    },
+    "Switch to Another PHP Version": {
+        "prefix": "a-switch-to-another-php-version",
+        "description": "Switch to Another PHP Version",
+        "body": [
+            "AddHandler application/x-httpd-php56 .php",
+            "",
+            "# Alternatively, you can use AddType",
+            "AddType application/x-httpd-php56 .php"
+        ]
+    },
+    "Disable Internet Explorer Compatibility View": {
+        "prefix": "a-disable-internet-explorer-compatibility-view",
+        "description": "Disable Internet Explorer Compatibility View",
+        "body": [
+            "<IfModule mod_headers.c>",
+            "   BrowserMatch MSIE is-msie",
+            "   Header set X-UA-Compatible IE=edge env=is-msie",
+            "</IfModule>"
+        ]
+    },
+    "Serve WebP Images": {
+        "prefix": "a-serve-webp-images",
+        "description": "Serve WebP Images",
+        "body": [
+            "RewriteEngine On",
+            "RewriteCond %{HTTP_ACCEPT} image/webp",
+            "RewriteCond %{DOCUMENT_ROOT}/$1.webp -f",
+            "RewriteRule (.+)\\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]"
+        ]
+    }
 }
