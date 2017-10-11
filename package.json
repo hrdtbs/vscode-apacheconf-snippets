@@ -11,14 +11,14 @@
     "license": "SEE LICENSE IN LICENSE.md",
     "repository": {
         "type": "git",
-        "url": "https://github.com/eiminsasete/vscode-apacheconf-snippets.git"
+        "url": "https://github.com/hrdtbs/vscode-apacheconf-snippets.git"
     },
     "keywords": [
         "Apache",
         "Apacheconf",
         "htaccess"
     ],
-    "version": "1.1.6",
+    "version": "1.1.9",
     "engines": {
         "vscode": "^1.10.0"
     },

@@ -1,4 +1,16 @@
 {
+    "Allow to refresh in react-router": {
+        "prefix": "a-allow-to-refresh-in-react-router",
+        "description": "Allow to refresh in react-router",
+        "body": [
+            "RewriteEngine on",
+            "RewriteBase /",
+            "RewriteRule ^index\\.html$ - [L]",
+            "RewriteCond %{REQUEST_FILENAME} !-f",
+            "RewriteCond %{REQUEST_FILENAME} !-d",
+            "RewriteRule . /index.html [L]"
+        ]
+    },
     "Force www": {
         "prefix": "a-force-www",
         "description": "Force www",
