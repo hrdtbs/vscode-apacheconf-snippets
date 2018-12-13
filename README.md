@@ -6,7 +6,7 @@ This extension for Visual Studio Code adds snippets for Apache Conf (.htaccess f
 
 ## Requirement
 
-![mrmlnc.vscode-apache](https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-apache)
+[mrmlnc.vscode-apache](https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-apache)
 
 ## Usage
 
