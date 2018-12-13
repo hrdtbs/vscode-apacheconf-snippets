@@ -1,8 +1,8 @@
 ## Apache Snippets Changelog
 
-<a name="1.1.8"></a>
+<a name="1.2.0"></a>
 
-# 1.1.8 (2018-12-13)
+# 1.2.0 (2018-12-13)
 
 - Added Requirement to README.md
   - thank [jtanaka](https://github.com/jtanaka)
