@@ -1,3 +1,5 @@
+Thanks for over 45000 installs🎉
+
 # Apache Conf Snippets for VS Code
 
 This extension for Visual Studio Code adds snippets for Apache Conf (.htaccess file).
