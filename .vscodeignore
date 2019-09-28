@@ -3,6 +3,7 @@
 out/test/**
 test/**
 src/**
+node_modules
 **/*.map
 .gitignore
 
