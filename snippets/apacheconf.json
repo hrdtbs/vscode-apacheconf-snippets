@@ -144,6 +144,14 @@
             "RewriteRule ^([^.]+)$ $1.php [NC,L]"
         ]
     },
+    "Exclude URL from Redirection": {
+        "prefix": "a-exclude-url-from-redirection",
+        "description": "Exclude URL from Redirection",
+        "body": [
+            "RewriteEngine On",
+            "RewriteRule ^robots.txt - [L]"
+        ]
+    },
     "Deny All Access": {
         "prefix": "a-deny-all-access",
         "description": "Deny All Access",

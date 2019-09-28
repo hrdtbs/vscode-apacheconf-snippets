@@ -33,6 +33,7 @@ Type part of a snippet, press `enter`, and the snippet unfolds.
 | `a-alias-paths-to-script`            | Alias Paths To Script            |
 | `a-redirect-an-entire-site`          | Redirect an Entire Site          |
 | `a-alias-clean-urls`                 | Alias “Clean” URLs               |
+| `a-exclude-url-from-redirection`     | Exclude URL from Redirection     |
 | `a-allow-to-refresh-in-react-router` | Allow to refresh in react-router |
 
 - Security
