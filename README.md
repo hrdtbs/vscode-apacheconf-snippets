@@ -1,4 +1,4 @@
-Thanks for over 45000 installs🎉
+Thanks for over 64000 installs🎉
 
 # Apache Conf Snippets for VS Code
 
