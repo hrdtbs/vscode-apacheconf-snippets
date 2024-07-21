@@ -7,4 +7,5 @@ node_modules
 **/*.map
 .gitignore
 
-MEMO.md
+img/**
+!img/apache.png
