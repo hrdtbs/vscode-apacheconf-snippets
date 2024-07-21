@@ -148,10 +148,10 @@
     "description": "Deny All Access",
     "body": [
       "## Apache 2.2",
-      "Deny from all",
+      "# Deny from all",
       "",
       "## Apache 2.4",
-      "# Require all denied"
+      "Require all denied"
     ]
   },
   "Deny All Access Except Yours": {
@@ -159,13 +159,13 @@
     "description": "Deny All Access Except Yours",
     "body": [
       "## Apache 2.2",
-      "Order deny,allow",
-      "Deny from all",
-      "Allow from xxx.xxx.xxx.xxx",
+      "# Order deny,allow",
+      "# Deny from all",
+      "# Allow from xxx.xxx.xxx.xxx",
       "",
       "## Apache 2.4",
-      "# Require all denied",
-      "# Require ip xxx.xxx.xxx.xxx"
+      "Require all denied",
+      "Require ip xxx.xxx.xxx.xxx"
     ]
   },
   "Allow All Access Except Spammers'": {
@@ -173,14 +173,14 @@
     "description": "Allow All Access Except Spammers'",
     "body": [
       "## Apache 2.2",
-      "Order deny,allow",
-      "Deny from xxx.xxx.xxx.xxx",
-      "Deny from xxx.xxx.xxx.xxy",
+      "# Order deny,allow",
+      "# Deny from xxx.xxx.xxx.xxx",
+      "# Deny from xxx.xxx.xxx.xxy",
       "",
       "## Apache 2.4",
-      "# Require all granted",
-      "# Require not ip xxx.xxx.xxx.xxx",
-      "# Require not ip xxx.xxx.xxx.xxy"
+      "Require all granted",
+      "Require not ip xxx.xxx.xxx.xxx",
+      "Require not ip xxx.xxx.xxx.xxy"
     ]
   },
   "Deny Access to Hidden Files and Directories": {
@@ -198,12 +198,12 @@
     "body": [
       "<FilesMatch \"(\\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$\">",
       "    ## Apache 2.2",
-      "    Order allow,deny",
-      "    Deny from all",
-      "    Satisfy All",
+      "    # Order allow,deny",
+      "    # Deny from all",
+      "    # Satisfy All",
       "",
       "    ## Apache 2.4",
-      "    # Require all denied",
+      "    Require all denied",
       "</FilesMatch>"
     ]
   },
