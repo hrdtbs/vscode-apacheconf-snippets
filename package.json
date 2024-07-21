@@ -26,7 +26,7 @@
     "vscode": "^1.1.37"
   },
   "devDependencies": {
-    "vsce": "^1.79.5",
+    "vsce": "^2.15.0",
     "vscode": "^1.1.37"
   },
   "categories": [
